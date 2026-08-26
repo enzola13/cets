@@ -13,6 +13,7 @@ import {
   SchoolConfig,
 } from '../types.ts';
 import { api } from '../services/api.ts';
+import { clientStorage } from '../services/clientStorage.ts';
 
 interface DataContextType {
   data: DatabaseSchema | null;
@@ -133,18 +134,20 @@ interface DataContextType {
 const DataContext = createContext<DataContextType | undefined>(undefined);
 
 export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [data, setData] = useState<DatabaseSchema | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [data, setData] = useState<DatabaseSchema>(() => clientStorage.getFullDatabase());
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   const refreshData = useCallback(async () => {
     try {
       setError(null);
       const bootstrap = await api.getBootstrapData();
-      setData(bootstrap);
+      if (bootstrap) {
+        setData(bootstrap);
+      }
     } catch (err: any) {
       console.error('Failed to load school data:', err);
-      setError(err?.message || 'Erro ao carregar dados escolares');
+      // Even if network fails, we already have offline data initialized
     } finally {
       setIsLoading(false);
     }
