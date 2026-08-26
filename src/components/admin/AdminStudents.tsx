@@ -30,7 +30,7 @@ export const AdminStudents: React.FC<AdminStudentsProps> = ({
   isNewStudentModalOpen = false,
   onCloseNewStudentModal,
 }) => {
-  const { students, classes, addStudent, updateStudent, deleteStudent } = useData();
+  const { students, classes, createStudent, updateStudent, deleteStudent } = useData();
   const [localSearch, setLocalSearch] = useState(searchFilter);
   const [selectedClass, setSelectedClass] = useState<string>('all');
   const [selectedStatus, setSelectedStatus] = useState<string>('all');
@@ -75,7 +75,7 @@ export const AdminStudents: React.FC<AdminStudentsProps> = ({
 
     const newEnrollment = `CETS2026${Math.floor(100 + Math.random() * 900)}`;
 
-    await addStudent({
+    await createStudent({
       userId: `user-stu-${Date.now()}`,
       name,
       email,
@@ -84,11 +84,9 @@ export const AdminStudents: React.FC<AdminStudentsProps> = ({
       enrollment: newEnrollment,
       classId: classId || classes[0]?.id,
       course,
-      semester: 1,
       academicStatus: 'Ativo',
-      registrationDate: new Date().toISOString().split('T')[0],
+      enrollmentDate: new Date().toISOString().split('T')[0],
       bloodType: 'O+',
-      hasAllergy: false,
     });
 
     setName('');
@@ -244,7 +242,7 @@ export const AdminStudents: React.FC<AdminStudentsProps> = ({
                           className={`text-[10px] font-bold px-2.5 py-1 rounded-full uppercase ${
                             student.academicStatus === 'Ativo'
                               ? 'bg-green-100 text-green-700'
-                              : student.academicStatus === 'Formado'
+                              : student.academicStatus === 'Concluído'
                               ? 'bg-blue-100 text-blue-700'
                               : 'bg-slate-100 text-slate-500'
                           }`}

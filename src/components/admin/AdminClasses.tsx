@@ -55,10 +55,10 @@ export const AdminClasses: React.FC = () => {
                 </span>
               </div>
               <h3 className="text-base font-bold text-slate-800 mb-1">{cls.name}</h3>
-              <p className="text-xs text-slate-400 mb-3">{cls.course} • {cls.yearSemester}</p>
+              <p className="text-xs text-slate-400 mb-3">{cls.module} • {cls.year}.{cls.semester}</p>
               <div className="flex items-center justify-between pt-3 border-t border-slate-100 text-xs font-semibold text-slate-600">
                 <span className="flex items-center gap-1.5">
-                  <Users className="w-4 h-4 text-teal-600" /> {count} / {cls.maxCapacity} alunos
+                  <Users className="w-4 h-4 text-teal-600" /> {count} / {cls.maxStudents || 40} alunos
                 </span>
                 <span className="text-teal-700">Sala {cls.room}</span>
               </div>

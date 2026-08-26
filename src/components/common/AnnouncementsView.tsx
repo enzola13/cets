@@ -10,25 +10,29 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext.tsx';
 import { useData } from '../../context/DataContext.tsx';
+import { AnnouncementCategory } from '../../types.ts';
 
 export const AnnouncementsView: React.FC = () => {
-  const { role } = useAuth();
-  const { announcements, addAnnouncement } = useData();
+  const { role, user } = useAuth();
+  const { announcements, createAnnouncement } = useData();
 
   const [showAddModal, setShowAddModal] = useState(false);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [category, setCategory] = useState<'Geral' | 'Urgente' | 'Estágio' | 'Financeiro' | 'Acadêmico'>('Geral');
+  const [category, setCategory] = useState<AnnouncementCategory>('Aviso Geral');
   const [toast, setToast] = useState<string | null>(null);
 
   const handleCreateAnnouncement = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim() || !content.trim()) return;
 
-    await addAnnouncement({
+    await createAnnouncement({
       title,
       content,
       category,
+      priority: category === 'Urgente' ? 'alta' : 'normal',
+      targetType: 'todos',
+      authorName: user?.name || 'Coordenação Acadêmica CETS',
       active: true,
     });
 

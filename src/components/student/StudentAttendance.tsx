@@ -19,16 +19,15 @@ export const StudentAttendance: React.FC = () => {
 
   // Recent attendance records for this student
   const studentAttendanceRecords = attendance
-    .filter((a) => a.records.some((r) => r.studentId === student?.id))
+    .filter((a) => a.studentId === student?.id)
     .map((a) => {
-      const rec = a.records.find((r) => r.studentId === student?.id);
       const sub = subjects.find((s) => s.id === a.subjectId);
       return {
         id: a.id,
         date: a.date,
         subjectName: sub?.name || 'Disciplina',
-        status: rec?.status || 'Presente',
-        notes: rec?.notes || '',
+        status: a.status,
+        notes: a.justificationNotes || '',
       };
     })
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
@@ -143,7 +142,7 @@ export const StudentAttendance: React.FC = () => {
                   <div>
                     <span className="font-bold text-slate-900 text-sm">{item.subjectName}</span>
                     <span className="text-xs text-slate-500 block">
-                      {item.presences} presenças de {item.total} aulas apuradas ({item.absences} faltas, {item.justified} justificadas)
+                      {item.presences} presenças de {item.total} aulas apuradas ({item.absences} faltas)
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
@@ -208,9 +207,9 @@ export const StudentAttendance: React.FC = () => {
                     <td className="p-3.5 font-semibold text-slate-900">{r.subjectName}</td>
                     <td className="p-3.5 text-center">
                       <span className={`inline-block px-2.5 py-0.5 rounded-full font-bold text-[10px] ${
-                        r.status === 'Presente'
+                        r.status === 'Presença'
                           ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
-                          : r.status === 'Justificado'
+                          : r.status === 'Falta Justificada'
                           ? 'bg-amber-50 text-amber-800 border border-amber-200'
                           : 'bg-rose-50 text-rose-800 border border-rose-200'
                       }`}>

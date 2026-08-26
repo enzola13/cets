@@ -24,7 +24,7 @@ export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({ setActiveTab
 
   const currentTeacherId = teacherProfile?.id || 'tea-1';
   const mySubjects = subjects.filter((s) => s.teacherId === currentTeacherId);
-  const myClasses = classes.filter((c) => mySubjects.some((s) => s.classId === c.id));
+  const myClasses = classes.filter((c) => schedules.some((sc) => sc.teacherId === currentTeacherId && sc.classId === c.id) || classes.length > 0);
   const myStudents = students.filter((s) => myClasses.some((c) => c.id === s.classId));
 
   return (

@@ -10,10 +10,11 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext.tsx';
 import { useData } from '../../context/DataContext.tsx';
+import { AttendanceStatus } from '../../types.ts';
 
 export const TeacherAttendance: React.FC = () => {
-  const { teacherProfile } = useAuth();
-  const { subjects, classes, students, recordAttendance } = useData();
+  const { teacherProfile, user } = useAuth();
+  const { subjects, classes, students, schedules, saveAttendanceRollCall } = useData();
 
   const currentTeacherId = teacherProfile?.id || 'tea-1';
   const mySubjects = subjects.filter((s) => s.teacherId === currentTeacherId);
@@ -22,12 +23,13 @@ export const TeacherAttendance: React.FC = () => {
   const [saveToast, setSaveToast] = useState(false);
 
   const currentSubject = subjects.find((s) => s.id === selectedSubjectId) || subjects[0];
-  const targetClass = classes.find((c) => c.id === currentSubject?.classId) || classes[0];
+  const matchingSchedule = schedules.find((sc) => sc.subjectId === currentSubject?.id);
+  const targetClass = classes.find((c) => c.id === matchingSchedule?.classId) || classes[0];
   const classStudents = students.filter((s) => s.classId === targetClass?.id);
 
-  const [studentStatusMap, setStudentStatusMap] = useState<Record<string, 'Presente' | 'Falta' | 'Justificado'>>({});
+  const [studentStatusMap, setStudentStatusMap] = useState<Record<string, AttendanceStatus>>({});
 
-  const setStatus = (studentId: string, status: 'Presente' | 'Falta' | 'Justificado') => {
+  const setStatus = (studentId: string, status: AttendanceStatus) => {
     setStudentStatusMap((prev) => ({
       ...prev,
       [studentId]: status,
@@ -35,9 +37,9 @@ export const TeacherAttendance: React.FC = () => {
   };
 
   const handleMarkAllPresent = () => {
-    const newMap: Record<string, 'Presente' | 'Falta' | 'Justificado'> = {};
+    const newMap: Record<string, AttendanceStatus> = {};
     classStudents.forEach((s) => {
-      newMap[s.id] = 'Presente';
+      newMap[s.id] = 'Presença';
     });
     setStudentStatusMap(newMap);
   };
@@ -45,15 +47,14 @@ export const TeacherAttendance: React.FC = () => {
   const handleSaveAttendance = async () => {
     const records = classStudents.map((s) => ({
       studentId: s.id,
-      status: studentStatusMap[s.id] || 'Presente',
+      subjectId: selectedSubjectId,
+      classId: targetClass?.id || '',
+      date: callDate,
+      status: studentStatusMap[s.id] || 'Presença',
+      recordedBy: user?.name || 'Professor',
     }));
 
-    await recordAttendance({
-      classId: targetClass?.id || '',
-      subjectId: selectedSubjectId,
-      date: callDate,
-      records,
-    });
+    await saveAttendanceRollCall(records);
 
     setSaveToast(true);
     setTimeout(() => setSaveToast(false), 3000);
@@ -156,14 +157,14 @@ export const TeacherAttendance: React.FC = () => {
                       <div className="inline-flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl">
                         <button
                           type="button"
-                          onClick={() => setStatus(stu.id, 'Presente')}
+                          onClick={() => setStatus(stu.id, 'Presença')}
                           className={`px-3 py-1 text-xs font-bold rounded-lg transition-all ${
-                            currentSt === 'Presente'
+                            currentSt === 'Presença'
                               ? 'bg-emerald-600 text-white shadow-xs'
                               : 'text-slate-600 hover:text-slate-900'
                           }`}
                         >
-                          Presente
+                          Presença
                         </button>
                         <button
                           type="button"
@@ -178,9 +179,9 @@ export const TeacherAttendance: React.FC = () => {
                         </button>
                         <button
                           type="button"
-                          onClick={() => setStatus(stu.id, 'Justificado')}
+                          onClick={() => setStatus(stu.id, 'Falta Justificada')}
                           className={`px-3 py-1 text-xs font-bold rounded-lg transition-all ${
-                            currentSt === 'Justificado'
+                            currentSt === 'Falta Justificada'
                               ? 'bg-amber-600 text-white shadow-xs'
                               : 'text-slate-600 hover:text-slate-900'
                           }`}

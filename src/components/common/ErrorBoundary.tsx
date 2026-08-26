@@ -1,4 +1,4 @@
-import React, { ErrorInfo, ReactNode } from 'react';
+import React, { Component, ErrorInfo, ReactNode } from 'react';
 import { RefreshCw, AlertTriangle } from 'lucide-react';
 
 interface Props {
@@ -10,30 +10,34 @@ interface State {
   error: Error | null;
 }
 
-export class ErrorBoundary extends React.Component<Props, State> {
-  public state: State = {
-    hasError: false,
-    error: null,
-  };
+export class ErrorBoundary extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      hasError: false,
+      error: null,
+    };
+  }
 
   public static getDerivedStateFromError(error: Error): State {
     return { hasError: true, error };
   }
 
-  public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+  public override componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error('Uncaught React error caught by ErrorBoundary:', error, errorInfo);
   }
 
   private handleReset = () => {
     try {
       localStorage.removeItem('cets_school_database_v1');
+      localStorage.removeItem('cets_auth_session');
     } catch {
       // ignore
     }
     window.location.reload();
   };
 
-  public render() {
+  public override render() {
     if (this.state.hasError) {
       return (
         <div className="min-h-screen bg-slate-900 text-white flex flex-col items-center justify-center p-6">
@@ -45,13 +49,13 @@ export class ErrorBoundary extends React.Component<Props, State> {
               Recuperação do Portal CETS
             </h1>
             <p className="text-sm text-slate-400 mb-6 leading-relaxed">
-              Ocorreu uma instabilidade momentânea na interface. Clique abaixo para restaurar a sessão e recarregar os dados com segurança.
+              Ocorreu uma instabilidade momentânea na interface ({this.state.error?.message || 'Erro desconhecido'}). Clique abaixo para restaurar a sessão e recarregar os dados com segurança.
             </p>
             <div className="space-y-3">
               <button
                 id="btn-error-reload"
                 onClick={() => window.location.reload()}
-                className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-xl font-medium transition cursor-pointer shadow-lg shadow-blue-600/30"
+                className="w-full flex items-center justify-center gap-2 bg-teal-600 hover:bg-teal-700 text-white py-3 px-4 rounded-xl font-medium transition cursor-pointer shadow-lg shadow-teal-600/30"
               >
                 <RefreshCw className="w-4 h-4" />
                 Recarregar Página
@@ -69,6 +73,6 @@ export class ErrorBoundary extends React.Component<Props, State> {
       );
     }
 
-    return (this as any).props?.children;
+    return this.props.children;
   }
 }

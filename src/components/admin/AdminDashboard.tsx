@@ -172,7 +172,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               <tbody className="divide-y divide-slate-50">
                 {filteredStudents.slice(0, 5).map((student) => {
                   const studentClass = classes.find((c) => c.id === student.classId);
-                  const isInactive = student.academicStatus === 'Trancado' || student.academicStatus === 'Inativo';
+                  const isInactive = student.academicStatus === 'Trancado' || student.academicStatus === 'Evadido';
                   return (
                     <tr
                       key={student.id}
@@ -208,7 +208,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                           className={`text-[10px] font-bold px-2.5 py-1 rounded-full uppercase ${
                             student.academicStatus === 'Ativo'
                               ? 'bg-green-100 text-green-700'
-                              : student.academicStatus === 'Formado'
+                              : student.academicStatus === 'Concluído'
                               ? 'bg-blue-100 text-blue-700'
                               : 'bg-slate-100 text-slate-500'
                           }`}

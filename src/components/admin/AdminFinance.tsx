@@ -49,7 +49,7 @@ export const AdminFinance: React.FC = () => {
 
   const handleMarkPaid = async (invoiceId: string) => {
     await payInvoice(invoiceId, {
-      paymentMethod: 'Manual/Secretaria',
+      paymentMethod: 'Dinheiro',
       notes: 'Baixa efetuada manualmente pelo painel administrativo',
     });
     setToastMsg('Fatura baixada com sucesso e recibo digital gerado!');
@@ -236,7 +236,7 @@ export const AdminFinance: React.FC = () => {
       {selectedReceiptInvoice && (
         <ReceiptModal
           invoice={selectedReceiptInvoice}
-          studentName={students.find((s) => s.id === selectedReceiptInvoice.studentId)?.name || 'Aluno CETS'}
+          student={students.find((s) => s.id === selectedReceiptInvoice.studentId) || students[0]}
           onClose={() => setSelectedReceiptInvoice(null)}
         />
       )}

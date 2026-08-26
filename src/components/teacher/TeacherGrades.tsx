@@ -11,8 +11,8 @@ import { useAuth } from '../../context/AuthContext.tsx';
 import { useData } from '../../context/DataContext.tsx';
 
 export const TeacherGrades: React.FC = () => {
-  const { teacherProfile } = useAuth();
-  const { subjects, classes, students, grades, updateGrade, config } = useData();
+  const { teacherProfile, user } = useAuth();
+  const { subjects, classes, students, grades, schedules, saveGrade, config } = useData();
 
   const currentTeacherId = teacherProfile?.id || 'tea-1';
   const mySubjects = subjects.filter((s) => s.teacherId === currentTeacherId);
@@ -20,7 +20,8 @@ export const TeacherGrades: React.FC = () => {
   const [saveSuccess, setSaveSuccess] = useState(false);
 
   const currentSubject = subjects.find((s) => s.id === selectedSubjectId) || subjects[0];
-  const targetClass = classes.find((c) => c.id === currentSubject?.classId) || classes[0];
+  const matchingSchedule = schedules.find((sc) => sc.subjectId === currentSubject?.id);
+  const targetClass = classes.find((c) => c.id === matchingSchedule?.classId) || classes[0];
   const classStudents = students.filter((s) => s.classId === targetClass?.id);
 
   // Local editing buffer
@@ -47,16 +48,17 @@ export const TeacherGrades: React.FC = () => {
     for (const stu of classStudents) {
       const gRecord = grades.find((g) => g.studentId === stu.id && g.subjectId === selectedSubjectId);
       const buffer = gradesState[stu.id];
-      if (buffer && gRecord) {
-        const finalAverage = (buffer.grade1 + buffer.grade2) / 2;
-        const passing = config?.minimumPassingGrade || 7.0;
-        const status = finalAverage >= passing ? 'Aprovado' : finalAverage >= 5.0 ? 'Recuperação' : 'Reprovado';
-
-        await updateGrade(gRecord.id, {
+      if (buffer) {
+        await saveGrade({
+          id: gRecord?.id,
+          studentId: stu.id,
+          subjectId: selectedSubjectId,
+          classId: targetClass?.id || stu.classId,
           grade1: buffer.grade1,
           grade2: buffer.grade2,
-          finalAverage: Number(finalAverage.toFixed(1)),
-          status,
+          examGrade: buffer.recovery || null,
+          updatedBy: user?.name || 'Professor',
+          auditNote: 'Lançamento efetuado via painel docente',
         });
       }
     }
