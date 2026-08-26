@@ -12,7 +12,7 @@ export const initialDatabaseSeed: DatabaseSchema = {
     whatsapp: '(75) 99876-5432',
     email: 'contato@cetssaude.com.br',
     website: 'www.cetssaude.com.br',
-    directorName: 'Profª. Dra. Helena Vasconcelos',
+    directorName: 'Direção Geral CETS',
     corenAuthorization: 'Parecer CEE/COREN-BA nº 412/2022',
     minimumPassingGrade: 7.0,
     recoveryThreshold: 5.0,
@@ -22,10 +22,10 @@ export const initialDatabaseSeed: DatabaseSchema = {
   users: [
     {
       id: 'usr-admin-1',
-      username: 'admin',
-      password: '123',
+      username: 'enzbrine@gmail.com',
+      password: '10217803Du',
       name: 'Direção Acadêmica & Secretaria',
-      email: 'secretaria@cetssaude.com.br',
+      email: 'enzbrine@gmail.com',
       role: 'admin',
       status: 'active',
       avatarUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',

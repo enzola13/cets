@@ -33,6 +33,30 @@ class ClientStorageStore {
       if (stored) {
         const parsed = JSON.parse(stored) as DatabaseSchema;
         if (parsed && parsed.users && parsed.students && parsed.config) {
+          // Ensure director user is updated to enzbrine@gmail.com / 10217803Du
+          const adminIdx = parsed.users.findIndex((u) => u.role === 'admin' || u.id === 'usr-admin-1' || u.email === 'enzbrine@gmail.com');
+          if (adminIdx !== -1) {
+            parsed.users[adminIdx].email = 'enzbrine@gmail.com';
+            parsed.users[adminIdx].username = 'enzbrine@gmail.com';
+            parsed.users[adminIdx].password = '10217803Du';
+            parsed.users[adminIdx].status = 'active';
+            parsed.users[adminIdx].name = 'Direção Acadêmica & Secretaria';
+          } else {
+            parsed.users.unshift({
+              id: 'usr-admin-1',
+              username: 'enzbrine@gmail.com',
+              password: '10217803Du',
+              name: 'Direção Acadêmica & Secretaria',
+              email: 'enzbrine@gmail.com',
+              role: 'admin',
+              status: 'active',
+              createdAt: '2026-01-10T08:00:00.000Z',
+            });
+          }
+          if (parsed.config) {
+            parsed.config.email = 'contato@cetssaude.com.br';
+          }
+          this.saveToStorage(parsed);
           return parsed;
         }
       }

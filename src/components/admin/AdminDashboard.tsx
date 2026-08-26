@@ -152,7 +152,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             </div>
             <button
               onClick={() => setActiveTab('alunos')}
-              className="text-teal-600 text-xs font-bold uppercase tracking-wider hover:underline"
+              className="text-blue-600 text-xs font-bold uppercase tracking-wider hover:underline"
             >
               Ver Todos
             </button>
@@ -224,7 +224,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                               setSelectedStudentForBoletim(student);
                             }}
                             title="Emitir Boletim"
-                            className="p-1.5 hover:bg-teal-50 text-teal-700 rounded-lg transition-colors text-xs font-bold"
+                            className="p-1.5 hover:bg-blue-50 text-blue-700 rounded-lg transition-colors text-xs font-bold"
                           >
                             Boletim
                           </button>
@@ -318,7 +318,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           <div className="p-4 bg-slate-50 border-t border-slate-100 rounded-b-2xl">
             <button
               onClick={handleGenerateReport}
-              className="w-full text-center py-2 text-xs font-bold text-slate-600 hover:text-teal-600 transition-colors uppercase tracking-widest"
+              className="w-full text-center py-2 text-xs font-bold text-slate-600 hover:text-blue-600 transition-colors uppercase tracking-widest"
             >
               Gerar Relatório Financeiro
             </button>

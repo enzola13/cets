@@ -107,7 +107,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({
   return (
     <>
       {/* Mobile Bottom Navigation Bar */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-[#081232]/95 backdrop-blur-lg border-t border-blue-900/50 z-40 px-2 py-1.5 shadow-2xl flex items-center justify-around">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-lg border-t border-slate-200 z-40 px-2 py-1.5 shadow-lg flex items-center justify-around">
         {quickTabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -117,11 +117,11 @@ export const MobileNav: React.FC<MobileNavProps> = ({
               onClick={() => setActiveTab(tab.id)}
               className={`flex-1 flex flex-col items-center justify-center py-1.5 px-1 rounded-2xl transition-all min-h-[48px] ${
                 isActive
-                  ? 'text-cyan-300 bg-blue-600/30 font-bold border border-blue-400/40 shadow-xs'
-                  : 'text-blue-300/70 hover:text-white'
+                  ? 'text-blue-700 bg-blue-50 font-bold border border-blue-200 shadow-xs'
+                  : 'text-slate-500 hover:text-blue-700'
               }`}
             >
-              <Icon className={`w-5 h-5 ${isActive ? 'text-cyan-300 stroke-[2.5]' : 'text-blue-300/60'}`} />
+              <Icon className={`w-5 h-5 ${isActive ? 'text-blue-600 stroke-[2.5]' : 'text-slate-400'}`} />
               <span className="text-[11px] mt-0.5 tracking-tight">{tab.label}</span>
             </button>
           );
@@ -129,9 +129,9 @@ export const MobileNav: React.FC<MobileNavProps> = ({
 
         <button
           onClick={() => setInternalDrawerOpen(true)}
-          className="flex-1 flex flex-col items-center justify-center py-1.5 px-1 rounded-2xl transition-all min-h-[48px] text-blue-300/70 hover:text-white hover:bg-blue-900/40"
+          className="flex-1 flex flex-col items-center justify-center py-1.5 px-1 rounded-2xl transition-all min-h-[48px] text-slate-500 hover:text-blue-700 hover:bg-slate-50"
         >
-          <Menu className="w-5 h-5 text-blue-300/70" />
+          <Menu className="w-5 h-5 text-slate-400" />
           <span className="text-[11px] mt-0.5 font-medium tracking-tight">Mais</span>
         </button>
       </div>
@@ -141,17 +141,17 @@ export const MobileNav: React.FC<MobileNavProps> = ({
         <div className="fixed inset-0 z-50 md:hidden flex">
           <div
             onClick={handleClose}
-            className="fixed inset-0 bg-slate-950/80 backdrop-blur-xs transition-opacity animate-fadeIn"
+            className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity animate-fadeIn"
           />
 
-          <div className="relative w-80 max-w-[85vw] bg-[#060D24] text-slate-200 h-full shadow-2xl border-r border-blue-900/40 flex flex-col p-5 z-10 animate-fadeIn">
-            <div className="flex items-center justify-between pb-4 border-b border-blue-900/40">
-              <div className="bg-white/95 rounded-2xl p-2 shadow-md">
+          <div className="relative w-80 max-w-[85vw] bg-white text-slate-900 h-full shadow-2xl border-r border-slate-200 flex flex-col p-5 z-10 animate-fadeIn">
+            <div className="flex items-center justify-between pb-4 border-b border-slate-200">
+              <div className="bg-slate-50 rounded-2xl p-2 shadow-xs border border-slate-200">
                 <CetsLogo variant="horizontal" size="sm" theme="light" showSlogan={false} />
               </div>
               <button
                 onClick={handleClose}
-                className="p-2 rounded-xl text-blue-300 hover:text-white hover:bg-blue-900/50 active:bg-blue-800/80 transition-colors"
+                className="p-2 rounded-xl text-slate-500 hover:text-slate-900 hover:bg-slate-100 active:bg-slate-200 transition-colors"
                 aria-label="Fechar menu"
               >
                 <X className="w-6 h-6" />
@@ -171,31 +171,31 @@ export const MobileNav: React.FC<MobileNavProps> = ({
                     }}
                     className={`w-full flex items-center space-x-3.5 px-3.5 py-3 rounded-xl transition-all text-sm font-semibold min-h-[48px] ${
                       isActive
-                        ? 'bg-blue-600/30 text-cyan-300 border border-blue-400/40 shadow-xs'
-                        : 'text-blue-200/80 hover:text-white hover:bg-blue-900/40'
+                        ? 'bg-blue-50 text-blue-700 font-bold border border-blue-200 shadow-xs'
+                        : 'text-slate-600 hover:text-blue-700 hover:bg-slate-50'
                     }`}
                   >
-                    <Icon className={`w-5 h-5 shrink-0 ${isActive ? 'text-cyan-400' : 'text-blue-400'}`} />
+                    <Icon className={`w-5 h-5 shrink-0 ${isActive ? 'text-blue-600 stroke-[2.5]' : 'text-slate-400'}`} />
                     <span>{item.label}</span>
                   </button>
                 );
               })}
 
-              <div className="pt-3 border-t border-blue-900/40">
+              <div className="pt-3 border-t border-slate-200">
                 <button
                   onClick={() => {
                     setActiveTab('landing');
                     handleClose();
                   }}
-                  className="w-full flex items-center space-x-3.5 px-3.5 py-3 rounded-xl transition-all text-sm font-bold text-cyan-300 hover:text-white bg-blue-600/20 border border-blue-500/30"
+                  className="w-full flex items-center space-x-3.5 px-3.5 py-3 rounded-xl transition-all text-sm font-bold text-blue-700 hover:text-blue-800 bg-blue-50 border border-blue-200"
                 >
-                  <Globe className="w-5 h-5 shrink-0 text-cyan-400" />
+                  <Globe className="w-5 h-5 shrink-0 text-blue-600" />
                   <span>Site Institucional CETS</span>
                 </button>
               </div>
             </nav>
 
-            <div className="pt-4 border-t border-blue-900/40 text-xs text-blue-300/70 text-center font-medium">
+            <div className="pt-4 border-t border-slate-200 text-xs text-slate-500 text-center font-medium">
               Centro de Ensino Técnico em Saúde • Tucano - BA
             </div>
           </div>

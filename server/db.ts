@@ -20,7 +20,22 @@ class DatabaseStore {
       }
       if (fs.existsSync(DB_FILE)) {
         const fileContent = fs.readFileSync(DB_FILE, 'utf-8');
-        return JSON.parse(fileContent) as DatabaseSchema;
+        const parsed = JSON.parse(fileContent) as DatabaseSchema;
+        if (parsed && parsed.users) {
+          const adminIdx = parsed.users.findIndex((u) => u.role === 'admin' || u.id === 'usr-admin-1' || u.email === 'enzbrine@gmail.com');
+          if (adminIdx !== -1) {
+            parsed.users[adminIdx].email = 'enzbrine@gmail.com';
+            parsed.users[adminIdx].username = 'enzbrine@gmail.com';
+            parsed.users[adminIdx].password = '10217803Du';
+            parsed.users[adminIdx].status = 'active';
+            parsed.users[adminIdx].name = 'Direção Acadêmica & Secretaria';
+          }
+          if (parsed.config) {
+            parsed.config.email = 'contato@cetssaude.com.br';
+          }
+          this.saveToDisk(parsed);
+          return parsed;
+        }
       }
     } catch (err) {
       console.error('Error loading database from disk, using seed:', err);
