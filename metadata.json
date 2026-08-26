@@ -1,0 +1,8 @@
+{
+  "name": "CETS - Portal Acadêmico em Saúde",
+  "description": "Sistema de gestão acadêmica e financeira para o Centro de Ensino Técnico em Saúde (CETS), com portais integrados para alunos de Enfermagem, professores e administração.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 280" width="1000" height="280">
+  <defs>
+    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0055FF" />
+      <stop offset="35%" stop-color="#00D4FF" />
+      <stop offset="70%" stop-color="#38BDF8" />
+      <stop offset="100%" stop-color="#002B99" />
+    </linearGradient>
+    <linearGradient id="ringDarkGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#001F7A" />
+      <stop offset="50%" stop-color="#0044CC" />
+      <stop offset="100%" stop-color="#00D2FF" />
+    </linearGradient>
+    <linearGradient id="redGloss" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#FF2A4B" />
+      <stop offset="45%" stop-color="#DC143C" />
+      <stop offset="100%" stop-color="#99001A" />
+    </linearGradient>
+    <radialGradient id="discGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="80%" stop-color="#F0F8FF" />
+      <stop offset="100%" stop-color="#E0F2FE" />
+    </radialGradient>
+    <filter id="softDrop" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#000000" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <!-- EMBLEM LEFT (Centered at x=140, y=140, r=120) -->
+  <g transform="translate(140, 140) scale(1.15)">
+    <!-- White glowing background circle -->
+    <circle cx="0" cy="0" r="74" fill="url(#discGlow)" />
+
+    <!-- Orbital Cyan/Blue Double Crescents -->
+    <path d="M -70,0 C -70,-45 -32,-82 15,-80 C 58,-78 88,-48 85,-45 C 82,-42 52,-62 15,-64 C -25,-66 -54,-35 -54,0 C -54,35 -25,66 15,64 C 52,62 82,42 85,45 C 88,48 58,78 15,80 C -32,82 -70,45 -70,0 Z" fill="url(#ringGrad)" />
+    <path d="M -80,0 C -80,-55 -35,-95 25,-92 C 0,-82 -58,-50 -58,0 C -58,50 0,82 25,92 C -35,95 -80,55 -80,0 Z" fill="url(#ringDarkGrad)" />
+
+    <!-- Red Cross -->
+    <g filter="url(#softDrop)">
+      <path d="M -56,-12 L -48,-12 L -48,-20 L -40,-20 L -40,-12 L -32,-12 L -32,-4 L -40,-4 L -40,4 L -48,4 L -48,-4 L -56,-4 Z" fill="url(#redGloss)" stroke="#99001A" stroke-width="0.5" />
+    </g>
+
+    <!-- ECG Heartbeat Line -->
+    <path d="M 8,0 L 22,0 L 26,-12 L 32,18 L 38,-22 L 44,12 L 48,-4 L 52,2 L 68,2" stroke="url(#redGloss)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+
+    <!-- Stylized Nurse Figure -->
+    <g id="nurse" filter="url(#softDrop)">
+      <path d="M -12,-52 C -6,-56 6,-56 12,-52 L 15,-45 L -15,-45 Z" fill="url(#redGloss)" />
+      <line x1="-3" y1="-50" x2="3" y2="-50" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" />
+      <line x1="0" y1="-53" x2="0" y2="-47" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" />
+      <circle cx="0" cy="-38" r="10" fill="url(#redGloss)" />
+      <path d="M 0,-26 C -9,-26 -20,-22 -28,-34 C -30,-37 -32,-34 -30,-31 C -24,-18 -13,-12 -6,-8 L -9,28 C -12,40 -20,54 -26,62 C -23,62 -16,52 -7,38 L -2,30 L -2,62 C -2,65 2,65 2,62 L 2,30 L 7,38 C 16,52 23,62 26,62 C 20,54 12,40 9,28 L 6,-8 C 13,-12 24,-18 30,-31 C 32,-34 30,-37 28,-34 C 20,-22 9,-26 0,-26 Z" fill="url(#redGloss)" />
+      <path d="M 0,-13 C -2,-18 -9,-18 -9,-13 C -9,-8 0,-2 0,-2 C 0,-2 9,-8 9,-13 C 9,-18 2,-18 0,-13 Z" fill="#FFFFFF" />
+      <ellipse cx="0" cy="66" rx="20" ry="3.5" fill="#DC143C" opacity="0.3" />
+    </g>
+  </g>
+
+  <!-- TEXT SECTION (Starting at x=310) -->
+  <!-- "(( CETS" in Deep Royal Blue -->
+  <text x="310" y="145" font-family="'Cinzel', 'Times New Roman', 'Playfair Display', Georgia, serif" font-size="125" font-weight="900" fill="#002B99" letter-spacing="4">
+    <tspan fill="#0055D4" font-weight="300">((</tspan>CETS
+  </text>
+
+  <!-- Subtitle: "CENTRO DE ENSINO TÉCNICO EM SAÚDE" in Bold Red -->
+  <text x="325" y="195" font-family="'Montserrat', 'Arial Black', sans-serif" font-size="30" font-weight="900" fill="#CC0000" letter-spacing="3">
+    CENTRO DE ENSINO TÉCNICO EM SAÚDE
+  </text>
+
+  <!-- Slogan: "Formação que você precisa, Qualidade que você Merece!" in Royal Blue -->
+  <text x="270" y="245" font-family="'Montserrat', 'Arial', sans-serif" font-size="28" font-weight="800" font-style="italic" fill="#0033CC" letter-spacing="0.5">
+    Formação que você precisa, Qualidade que você Merece!
+  </text>
+</svg>
